@@ -1,0 +1,52 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres:14.2
+    environment:
+      POSTGRES_DB: "spbmarket"
+      POSTGRES_USER: "spb"
+      POSTGRES_PASSWORD: "spb"
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+    volumes:
+      - ./migrations/scripts:/docker-entrypoint-initdb.d
+      - ./.data/pg:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U spb -d spbmarket"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 4G
+    networks:
+      - postgres
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "spb@spbmarket.com"
+      PGADMIN_DEFAULT_USER: "spb"
+      PGADMIN_DEFAULT_PASSWORD: "spb"
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+    volumes:
+      - ./.data/pgadmin:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 1G
+    networks:
+      - postgres
+
+networks:
+  postgres:
+    driver: bridge
