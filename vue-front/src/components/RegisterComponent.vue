@@ -7,7 +7,6 @@
             <div class="card-body p-md-5">
               <div class="row justify-content-center">
                 <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-
                   <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Регистрация</p>
 
                   <form class="mx-1 mx-md-4">
@@ -29,6 +28,7 @@
                     </div>
 
                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                      <b-button>Alert</b-button>
                       <button type="button" class="btn btn-primary btn-lg" v-on:click="handleSubmit">Register</button>
                     </div>
 
@@ -57,11 +57,13 @@ export default {
   inject: ['$axios'],
   methods: {
     handleSubmit: function () {
-      this.$axios.post('/api/user/register', ({
+      this.$axios.post('/api/user/register', null, {
+        params: {
           username: this.username,
           password: this.password
-      })).then(function (response) {
-        alert(response.code)
+        }
+      }).then(function (response) {
+        console.log(response.code)
       })
     }
   }

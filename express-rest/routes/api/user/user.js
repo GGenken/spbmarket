@@ -17,7 +17,7 @@ router.post('/login', async (req, res) => {
         req.session.userid = await userController.getIdByUsername(req.query.username);
         res.send('OK');
     }
-    else {  res.send('Error'); }
+    else { res.send('Error'); }
 });
 
 router.get('/getUsername', async (req, res) => {
