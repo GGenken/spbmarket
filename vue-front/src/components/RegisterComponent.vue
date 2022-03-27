@@ -1,47 +1,15 @@
 <template>
-  <section class="vh-100">
-    <div class="container h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-lg-12 col-xl-11">
-          <div class="card text-black">
-            <div class="card-body p-md-5">
-              <div class="row justify-content-center">
-                <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-                  <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Регистрация</p>
-
-                  <form class="mx-1 mx-md-4">
-
-                    <div class="d-flex flex-row align-items-center mb-4">
-                      <i class="fas fa-user fa-lg me-3 fa-fw"></i>
-                      <div class="form-outline flex-fill mb-0">
-                        <input type="text" v-model="username" id="username" class="form-control" placeholder="Bebroed129" />
-                        <label class="form-label" for="username">имя пользователя</label>
-                      </div>
-                    </div>
-
-                    <div class="d-flex flex-row align-items-center mb-4">
-                      <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
-                      <div class="form-outline flex-fill mb-0">
-                        <input type="password" v-model="password" class="form-control" placeholder="qwerty123" />
-                        <label class="form-label" for="username">пароль</label>
-                      </div>
-                    </div>
-
-                    <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                      <b-button>Alert</b-button>
-                      <button type="button" class="btn btn-primary btn-lg" v-on:click="handleSubmit">Register</button>
-                    </div>
-
-                  </form>
-
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+  <b-card style="max-width: 40rem;" title="Регистрация" class="mx-auto mt-5 p-3">
+      <b-form>
+        <b-form-group label="имя пользователя">
+          <b-form-input placeholder="5opka" v-model="form.username"></b-form-input>
+        </b-form-group>
+        <b-form-group label="пароль">
+          <b-form-input type="password" placeholder="TiZabanen251" v-model="form.password"></b-form-input>
+        </b-form-group>
+      </b-form>
+    <b-button type="submit" variant="primary" @click="handleSubmit">Зарегистрироваться</b-button>
+  </b-card>
 </template>
 
 <script>
@@ -50,8 +18,10 @@ export default {
 
   data () {
     return {
-      username: '',
-      password: ''
+      form: {
+        username: '',
+        password: ''
+      }
     }
   },
   inject: ['$axios'],
@@ -59,8 +29,8 @@ export default {
     handleSubmit: function () {
       this.$axios.post('/api/user/register', null, {
         params: {
-          username: this.username,
-          password: this.password
+          username: this.form.username,
+          password: this.form.username
         }
       }).then(function (response) {
         console.log(response.code)
@@ -69,7 +39,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>

@@ -1,13 +1,16 @@
-// app init
+// app imports
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 
-const app = createApp(App)
+// bootstrap imports
+// import "bootstrap/dist/css/bootstrap.min.css"
+// import "bootstrap"
+import BootstrapVue3 from "bootstrap-vue-3"
+import "bootstrap/dist/css/bootstrap.css"
+import "bootstrap-vue-3/dist/bootstrap-vue-3.css"
 
-app.use(router)
-
-// axios & store init
+// axios & store imports
 import store from './store'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
@@ -19,12 +22,12 @@ const base = axios.create({
   }
 })
 
+const app = createApp(App)
+app.use(BootstrapVue3)
+app.use(router)
 app.use(store)
 app.use(VueAxios, axios)
 app.provide('$axios', base)
-
-// bootstrap init
-// import "bootstrap/dist/css/bootstrap.min.css"
 
 
 // app
